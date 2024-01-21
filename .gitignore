@@ -1,2 +1,5 @@
 # Direnv cache
 .direnv
+
+# Nim build directory
+/build/
