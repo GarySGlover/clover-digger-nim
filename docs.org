@@ -1,0 +1,43 @@
+* Breadboard
+** Button
+Required imports
+#+begin_src nim
+  import picostdlib
+#+end_src
+Need to research this futher and might be able to setup for init of other things. However for now this at least enables echoing to work.
+#+begin_src nim
+  stdioInitAll()
+#+end_src
+Designed for the idea of column as output and row as input. Set the column as output and set to high. This will set the pins voltage to 3.3v.
+For matrix scan will either do col2row or row2col.
+Col2row will start with all cols set low, and set high when scanning.
+Row2col will start with all cols set high, and set low when scanning.
+#+begin_src nim
+  setupGpio(col, 10, Out)
+  col.put(High)
+#+end_src
+Row is set on the col2row style. With row as input using pulldown resistor. This means when switch isn't pressed input will be low. When switch is pressed row should be high.
+For row2col, use pullup resistor. Then the switch will be low on press.
+#+begin_src nim
+  setupGpio(row, 8, In)
+  row.pullDown
+#+end_src
+State of button scanning. Keep record of previous state and read in new state. Report when the state changes
+#+begin_src 
+  var state = row.get
+  var readState = state
+
+  while true:
+    readState = row.get
+    if state != readState:
+       state = readState
+       echo "Button changed to" & $readState
+    sleepMs(10)
+#+end_src
+** MCP23s17
+Document with C code and explanation of connection to the expander using SPI. As this is using a PI Pico and the SDK it should translate fairly well to the nim code required.
+https://vanhunteradams.com/6930/Emily_Wang.pdf
+
+#+begin_src nim
+  
+#+end_src

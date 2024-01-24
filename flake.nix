@@ -2,13 +2,13 @@
   description = "Flake for setting up Nim for PI Pico Development";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.extras.url = "github:GarySGlover/flakes";
+  # inputs.extras.url = "github:GarySGlover/flakes"; # Not needed whiel using nimble for packages
 
   outputs = {
     self,
     nixpkgs,
     flake-utils,
-    extras,
+    # extras,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (system: let
@@ -36,8 +36,10 @@
           libclang
           cmake
           gcc-arm-embedded
-          # extras.packages.${system}.futhark
-          # extras.packages.${system}.piconim
+          minicom # Doesn't work, needs to be added to nimble package
+          picotool # Doesn't work, needs to be added to nimble package
+          # extras.packages.${system}.futhark # Currently using nimble for packages
+          # extras.packages.${system}.piconim # Currently using nimble for packages
         ];
         shellHook = ''
           export PICO_SDK_PATH="${pico-sdk151}/lib/pico-sdk"

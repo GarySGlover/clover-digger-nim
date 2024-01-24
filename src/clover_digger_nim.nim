@@ -1,8 +1,21 @@
-import picostdlib, picostdlib/pico/cyw43_arch
+import picostdlib
 
-if cyw43ArchInit() == PicoErrorNone:
-  while true:
-    Cyw43WlGpioLedPin.put(High)
-    sleepMs(250)
-    Cyw43WlGpioLedPin.put(Low)
-    sleepMs(250)
+stdioInitAll()
+
+setupGpio(col, 10, Out)
+col.put(High)
+
+setupGpio(row, 8, In)
+row.pullDown
+
+sleepMs(250)
+
+var state = row.get
+var readState = state
+
+while true:
+  readState = row.get
+  if state != readState:
+     state = readState
+     echo "Button changed to" & $readState
+  sleepMs(250)
