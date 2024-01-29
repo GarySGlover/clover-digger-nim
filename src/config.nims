@@ -54,7 +54,7 @@ else:
   # default is to genereate C files
   switch("compileOnly", "on")
 
-switch("nimcache", cmakeBinaryDir / projectName() / "nimcache")
+switch("nimcache", getCurrentDir() & "/build" / projectName() / projectName() / "nimcache")
 
 switch("define", "checkAbi")
 switch("define", "nimMemAlignTiny")
@@ -70,4 +70,4 @@ switch("define", "nimEmulateOverflowChecks")
 switch("maxLoopIterationsVM", "100000000")
 
 # redefine in case strdefine was empty
-switch("define", "cmakeBinaryDir:" & cmakeBinaryDir)
+switch("define", "cmakeBinaryDir:" & getCurrentDir() & "/build" / projectName())
